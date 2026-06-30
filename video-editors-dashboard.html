@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Video editors niche — market dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#090D17; --panel:#292D39; --card:#161B26; --card-2:#3B404C;
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  --text:#ffffff; --muted:#A2A6B1; --faint:#6B7180;
+  --usa:#fd3433; --usa-soft:rgba(253,52,51,.14); --asia:#A2A6B1; --asia-soft:rgba(162,166,177,.14);
+  --accent:#fd3433; --pink:#fccaca;
+  --up:#54D98C; --down:#fd3433; --r:16px;
+}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:radial-gradient(1200px 620px at 50% -8%, rgba(253,52,51,.09), transparent 60%),radial-gradient(1100px 600px at 92% 4%, rgba(255,255,255,.03), transparent 55%),var(--ink);
+  color:var(--text);font-family:'Inter',system-ui,sans-serif;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;line-height:1.4}
+.wrap{max-width:1240px;margin:0 auto;padding:44px 28px 64px}
+.htitle{text-align:center}
+.htitle .eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;justify-content:center}
+.htitle .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:linear-gradient(90deg,var(--accent),var(--pink))}
+h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(38px,6vw,64px);letter-spacing:-.02em;margin:.22em 0 .12em;line-height:1.0}
+.htitle .sub{color:var(--muted);font-size:15px;max-width:60ch;margin:0 auto}
+.grade-bar{height:4px;width:130px;border-radius:4px;margin:18px auto 0;background:linear-gradient(90deg,var(--accent),var(--pink));opacity:.9}
+.title-row{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
+.capseg{display:inline-flex;background:var(--card);border:1px solid var(--line-2);border-radius:11px;padding:4px;gap:4px}
+.capseg button{font:inherit;font-size:12.5px;font-weight:700;letter-spacing:.02em;color:var(--muted);background:transparent;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;transition:background .15s ease,color .15s ease;white-space:nowrap;-webkit-appearance:none;appearance:none}
+.capseg button:hover{color:var(--text)}
+.capseg button[aria-pressed=true]{background:var(--accent);color:#fff;box-shadow:0 4px 14px rgba(253,52,51,.34)}
+
+.bignums{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:34px auto 30px;max-width:880px}
+.bignum{text-align:center;padding:6px 10px}
+.bignum .lab{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:8px}
+.bignum .lab .pin{width:9px;height:9px;border-radius:50%}
+.bignum .v{font-family:'Space Mono',monospace;font-weight:700;font-size:clamp(44px,8vw,72px);line-height:1.02;letter-spacing:-.03em;margin:6px 0 4px}
+.bignum .yr{color:var(--muted);font-size:13.5px}
+.bignum .yr .yref{color:var(--faint)}
+.bignum .proj2{margin-top:8px;color:var(--faint);font-size:12.5px}
+.bignum .proj2 b{color:var(--muted);font-family:'Space Mono',monospace;font-weight:700}
+.projnote{max-width:820px;margin:-14px auto 32px;text-align:center;color:var(--faint);font-size:12px;line-height:1.55}
+.projnote b{font-family:'Space Mono',monospace;color:var(--muted);font-weight:700}
+.delta{font-weight:700;font-family:'Space Mono',monospace;font-size:12px;padding:3px 9px;border-radius:7px;margin-left:6px}
+.delta.up{color:var(--up);background:rgba(84,217,140,.12)} .delta.down{color:var(--down);background:rgba(253,52,51,.12)} .delta.flat{color:var(--muted);background:rgba(255,255,255,.06)}
+.msplit{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px 26px;margin-bottom:6px}
+.msplit .mhead{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
+.msplit .mhead h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;margin:0}
+.msplit .mhead .leg{margin-left:auto;display:inline-flex;gap:16px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.msplit .mhead .leg .c{display:inline-flex;align-items:center;gap:6px}
+.msplit .mhead .leg .c .d{width:10px;height:10px;border-radius:3px}
+.mrow{margin-bottom:18px}.mrow:last-child{margin-bottom:0}
+.mrow .ml{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:7px}
+.mrow .ml .mr-name{font-weight:600;color:var(--text)}
+.sbar{display:flex;height:32px;border-radius:8px;overflow:hidden;gap:2px}
+.sbar .seg{display:flex;align-items:center;padding:0 12px;font-size:12.5px;font-weight:700;color:#0A0D15;white-space:nowrap;overflow:hidden;min-width:0;font-family:'Space Mono',monospace}
+.sbar .seg.ww{background:var(--usa);color:#fff}.sbar .seg.asia{background:var(--asia);color:#090D17}
+.sbar .seg .pct{opacity:.7;margin-left:6px;font-size:11px;font-weight:700}
+.mrow .mproj{font-size:11.5px;color:var(--faint);margin-top:8px}
+.mrow .mproj b{color:var(--muted);font-family:'Space Mono',monospace;font-weight:700}
+
+.cards{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px}
+.ncard{position:relative;border-radius:18px;padding:18px 16px 14px;border:1px solid var(--line);overflow:hidden;min-height:172px;display:flex;flex-direction:column;
+  background:linear-gradient(180deg,var(--tint) 0%, rgba(22,28,40,.65) 60%, var(--card) 100%);
+  cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%;-webkit-appearance:none;appearance:none;transition:transform .15s ease,box-shadow .2s ease,border-color .2s ease}
+.ncard::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--c)}
+.ncard:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 16px 34px rgba(0,0,0,.5),0 0 28px rgba(253,52,51,.13)}
+.ncard[aria-expanded=true]{border-color:var(--c);box-shadow:0 0 0 1px var(--c),0 10px 26px rgba(0,0,0,.4)}
+.ncard .chev{position:absolute;right:12px;top:12px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.09);border:1px solid var(--line-2);color:#fff;font-size:11px;line-height:1;transition:transform .25s ease,background .2s ease,border-color .2s ease;opacity:1}
+.ncard:hover .chev{background:var(--accent);border-color:var(--accent)}
+.ncard[aria-expanded=true] .chev{transform:rotate(180deg);background:var(--accent);border-color:var(--accent);color:#fff;opacity:1}
+.ncard .cname{display:block;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;line-height:1.15;margin-bottom:2px}
+.ncard .cdesc{display:block;color:var(--faint);font-size:10.5px;margin-bottom:12px;min-height:24px}
+.ncard .crev{display:block;font-family:'Space Mono',monospace;font-weight:700;font-size:26px;line-height:1;letter-spacing:-.01em}
+.ncard .crow{display:flex;align-items:center;gap:8px;margin-top:5px;color:var(--muted);font-size:11.5px}
+.ncard .crow .cyoy{font-family:'Space Mono',monospace;font-weight:700;font-size:11px}
+.cyoy.up{color:var(--up)} .cyoy.down{color:var(--down)} .cyoy.flat{color:var(--muted)}
+.ncard .cdl,.ncard .cproj{display:block;margin-top:3px;color:var(--faint);font-size:11px}
+.ncard .cdl b,.ncard .cproj b{color:var(--muted);font-family:'Space Mono',monospace;font-weight:700}
+.ncard .spark{display:flex;align-items:flex-end;gap:4px;height:30px;margin-top:auto;padding-top:10px}
+.ncard .spark i{flex:1;border-radius:3px 3px 0 0;min-height:3px}
+.ncard .cmetric{display:block;margin-top:14px}
+.ncard .cm-lab{display:block;font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.ncard .cm-val{display:block;font-family:'Space Mono',monospace;font-weight:700;font-size:22px;line-height:1.1;margin-top:3px}
+.ncard .cm-share{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.ncard .cm-share b{color:var(--text);font-weight:700;font-family:'Space Mono',monospace}
+.ncard .yclab{display:block;font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);margin-top:14px;margin-bottom:6px}
+.ncard .cyoys{display:flex;gap:6px}
+.ncard .cyoys .yc{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:8px;padding:5px 4px;min-width:0}
+.ncard .cyoys .yc .yy{font-size:9px;color:var(--faint);font-weight:600}
+.ncard .cyoys .yc .yv{font-family:'Space Mono',monospace;font-weight:700;font-size:11px}
+.yv.up{color:var(--up)}.yv.down{color:var(--down)}.yv.flat{color:var(--muted)}
+
+.sec-h{display:flex;align-items:baseline;gap:14px;margin:46px 0 18px}
+.sec-h h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:21px;letter-spacing:-.01em;margin:0}
+.sec-h .n{font-family:'Space Mono',monospace;color:var(--faint);font-size:13px}
+.sec-h .hint{margin-left:auto;color:var(--muted);font-size:12.5px}
+.legend{display:inline-flex;gap:16px;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:12.5px;font-weight:500}
+.legend .chip{display:inline-flex;align-items:center;gap:7px}
+.legend .sw{width:11px;height:11px;border-radius:3px}
+.legend .sw.usa{background:var(--usa)} .legend .sw.asia{background:var(--asia)}
+.cards-hint{color:var(--faint);font-size:12px;margin:12px 2px 0;text-align:center}
+.detail-wrap{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .42s cubic-bezier(.4,0,.2,1),opacity .3s ease,margin .3s ease}
+.detail-wrap.open{grid-template-rows:1fr;opacity:1;margin:18px 0 8px}
+.detail-inner{overflow:hidden;min-height:0}
+.detail-inner .niche{margin-bottom:0}
+
+/* dropdown filters */
+.filters{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:14px}
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:10px;background:var(--accent);border:1px solid var(--accent);border-radius:10px;padding:9px 14px;color:#fff;font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:filter .15s ease,box-shadow .15s ease}
+.dd-btn:hover{filter:brightness(1.08);box-shadow:0 6px 18px rgba(253,52,51,.38)}
+.dd-btn[aria-expanded=true]{filter:brightness(1.05);box-shadow:0 0 0 3px rgba(253,52,51,.35)}
+.dd-btn .dd-lab{color:#fccaca;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.dd-btn .dd-val{color:#fff;font-weight:700}
+.dd-btn .dd-caret{color:#fff;font-size:11px;transition:transform .2s ease}
+.dd-btn[aria-expanded=true] .dd-caret{transform:rotate(180deg)}
+.dd-pop{position:absolute;top:calc(100% + 6px);left:0;min-width:210px;background:#0E1320;border:1px solid var(--line-2);border-radius:12px;padding:6px;z-index:30;box-shadow:0 16px 44px rgba(0,0,0,.55);display:none}
+.dd.open .dd-pop{display:block}
+.dd-opt{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;font-size:13px;cursor:pointer;color:var(--text)}
+.dd-opt:hover{background:rgba(255,255,255,.08)}
+.dd-opt .ck{width:17px;height:17px;border-radius:5px;border:1.5px solid var(--faint);display:inline-flex;align-items:center;justify-content:center;flex:none}
+.dd-opt[aria-selected=true] .ck{background:var(--accent);border-color:var(--accent)}
+.dd-opt .ck svg{opacity:0}.dd-opt[aria-selected=true] .ck svg{opacity:1}
+.dd-opt .sw{width:11px;height:11px;border-radius:3px;flex:none}
+.dd-opt .ddt{flex:1}
+.dd-sep{height:1px;background:var(--line);margin:5px 6px}
+.dd-all{font-size:11.5px;color:var(--accent);padding:8px 10px;cursor:pointer;font-weight:700;border-radius:8px}
+.dd-all:hover{background:var(--usa-soft)}
+
+/* chart */
+.chart-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px 24px 18px;position:relative}
+svg.chart{width:100%;height:auto;display:block;overflow:visible}
+svg.chart .grid-l{stroke:rgba(255,255,255,.06)}
+svg.chart #guide{pointer-events:none}
+svg.chart .guide{stroke:rgba(255,255,255,.35);stroke-dasharray:3 3}
+svg.chart circle.gd{stroke:var(--ink);stroke-width:1.5}
+svg.chart .axis-t{fill:var(--faint);font-size:11px;font-family:'Space Mono',monospace}
+svg.chart .yr-t{fill:var(--muted);font-size:13px;font-weight:600;font-family:'Space Grotesk',sans-serif}
+svg.chart .yr-t.proj{fill:var(--faint)}
+svg.chart .tot-t{fill:var(--text);font-size:12px;font-weight:700;font-family:'Space Mono',monospace}
+svg.chart .proj-div{stroke:rgba(255,255,255,.22);stroke-dasharray:4 4}
+svg.chart .proj-lab{fill:var(--faint);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-family:'Space Grotesk',sans-serif}
+svg.chart path.layer{stroke-width:1.3;stroke-opacity:.55}
+.clegend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:16px;align-items:center}
+.clegend .lk{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)}
+.clegend .lk .d{width:10px;height:10px;border-radius:3px;flex:none}
+.clegend .lk.off{opacity:.35}
+.clegend .proj-key{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:var(--faint)}
+.clegend .proj-key .pb{width:14px;height:11px;border:1px dashed var(--faint);border-radius:2px;background:repeating-linear-gradient(45deg,rgba(255,255,255,.05) 0 3px,transparent 3px 6px)}
+.chart-tip{position:absolute;pointer-events:none;background:rgba(8,11,18,.97);border:1px solid var(--line-2);border-radius:11px;padding:11px 13px;font-size:12px;color:var(--text);opacity:0;transform:translate(-50%,calc(-100% - 14px));transition:opacity .12s;white-space:nowrap;z-index:5;box-shadow:0 10px 30px rgba(0,0,0,.5);min-width:180px}
+.chart-tip .th{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;margin-bottom:7px;display:flex;justify-content:space-between;gap:16px}
+.chart-tip .th .tt{font-family:'Space Mono',monospace}
+.chart-tip .tr{display:flex;align-items:center;gap:8px;justify-content:space-between;padding:2px 0}
+.chart-tip .tr .l{display:flex;align-items:center;gap:7px;color:var(--muted)}
+.chart-tip .tr .l .d{width:8px;height:8px;border-radius:2px}
+.chart-tip .tr .rv{font-family:'Space Mono',monospace;font-weight:700}
+
+/* niche detail */
+.niche{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px 24px;margin-bottom:18px;position:relative}
+.niche::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;border-radius:var(--r) var(--r) 0 0;background:var(--c);opacity:.7}
+.niche-head{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap}
+.niche-head .pin{width:12px;height:12px;border-radius:4px;flex:none}
+.niche-head h3{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:600;margin:0}
+.niche-head .desc{color:var(--faint);font-size:12.5px}
+.niche-head .tot{margin-left:auto;text-align:right}
+.niche-head .tot .v{font-family:'Space Mono',monospace;font-weight:700;font-size:18px;line-height:1}
+.niche-head .tot .l{font-size:11px;color:var(--muted)}
+.region-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px}
+.region-grid.solo{grid-template-columns:1fr;max-width:600px}
+.rbox{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 16px 12px}
+.rbox-h{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.rbox-h .pin{width:9px;height:9px;border-radius:50%}
+.rb-share{margin-left:auto;text-transform:none;letter-spacing:.01em;font-size:11px;color:var(--muted);font-family:'Space Mono',monospace;font-weight:700;white-space:nowrap}
+.mtab{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:12px}
+.mtab th,.mtab td{padding:5px 6px;text-align:right;white-space:nowrap}
+.mtab th{color:var(--faint);font-weight:600;font-size:10.5px;border-bottom:1px solid var(--line)}
+.mtab th.m,.mtab td.m{text-align:left;color:var(--muted);font-weight:500}
+.mtab td.v{font-family:'Space Mono',monospace;font-weight:700;color:var(--text)}
+.mtab td.latest{color:#fff}
+.mtab td.v .cv{display:block;font-family:'Space Mono',monospace;font-weight:700}
+.mtab td.v .cy{display:block;font-size:9px;font-family:'Space Mono',monospace;font-weight:700;margin-top:3px;line-height:1}
+.cy.up{color:var(--up)}.cy.down{color:var(--down)}.cy.flat{color:var(--muted)}
+.mtab th.proj,.mtab td.proj{background:repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 5px,transparent 5px 10px);border-left:1px dashed var(--line-2);border-right:1px dashed var(--line-2);color:var(--muted)}
+.proj-note{color:var(--faint);font-size:10.5px;margin-top:2px}
+.t5lab{font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);margin:10px 0 8px}
+.app{display:flex;align-items:center;gap:9px;padding:5px 0}
+.app .rk{font-family:'Space Mono',monospace;color:var(--faint);font-size:11px;width:15px;flex:none}
+.app .an{font-size:12.5px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.app .av{font-family:'Space Mono',monospace;font-weight:700;font-size:12px}
+.app .ay{font-family:'Space Mono',monospace;font-weight:700;font-size:10.5px;width:46px;text-align:right}
+.yoy{font-family:'Space Mono',monospace;font-weight:700;font-size:12px;text-align:right}
+.yoy.up{color:var(--up)} .yoy.down{color:var(--down)} .yoy.flat{color:var(--muted)}
+
+footer{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);color:var(--faint);font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:860px){ .bignums{grid-template-columns:1fr;gap:8px} .region-grid{grid-template-columns:1fr} }
+@media(max-width:1000px){ .cards{display:flex;overflow-x:auto;gap:12px;padding-bottom:6px;scroll-snap-type:x proximity} .cards .ncard{flex:0 0 auto;min-width:160px;scroll-snap-align:start} }
+@media(max-width:560px){ .wrap{padding:30px 16px 48px} }
+@media (prefers-reduced-motion:no-preference){ .ncard .spark i{transition:height .8s cubic-bezier(.22,.8,.24,1)} }
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head><body>
+<div class="wrap">
+  <div class="htitle">
+    <div class="title-row">
+      <h1>Video editors niche</h1>
+      <div class="capseg" id="capseg" role="group" aria-label="CapCut mode">
+        <button type="button" data-mode="with" aria-pressed="true">With CapCut</button>
+        <button type="button" data-mode="wo" aria-pressed="false">W.o. CapCut</button>
+      </div>
+    </div>
+    <div class="grade-bar"></div>
+  </div>
+
+  <section class="bignums" id="bignums"></section>
+  <p class="projnote">2026 = full-year projection: actual Jan&ndash;May 2026 revenue &amp; downloads <b>&divide;&nbsp;5 &times;&nbsp;12</b>.</p>
+
+  <div class="sec-h"><h2>Sub-niches</h2><span class="n">01</span><span class="hint">tap a card to break it down by market &amp; top apps</span></div>
+  <section class="cards" id="cards"></section>
+  <p class="cards-hint">Tap a card to open its WW (excl. Asia) &amp; Asia split, per-year YoY and top 5 apps.</p>
+  <div class="detail-wrap" id="detailwrap"><div class="detail-inner" id="detail"></div></div>
+
+  <div class="sec-h"><h2>Market over time</h2><span class="n">02</span><span class="hint">stacked by sub-niche · 2023 — 2026 (proj.)</span></div>
+  <section class="chart-wrap" id="cwrap">
+    <div class="filters">
+      <div id="dd-metric"></div><div id="dd-market"></div><div id="dd-niche"></div>
+    </div>
+    <svg class="chart" id="chartsvg" viewBox="0 0 860 380" role="img" aria-label="Stacked area chart of revenue or downloads by sub-niche, 2023 to 2026 projection"></svg>
+    <div class="chart-tip" id="ctip"></div>
+    <div class="clegend" id="clegend"></div>
+    <p style="color:var(--faint);font-size:11.5px;margin:14px 2px 0">Use the filters above to switch metric, market and which sub-niches to show · hover the chart for each year's breakdown.</p>
+  </section>
+</div>
+<script>
+const DATASETS={"with":{"niches": [{"name": "(AI) Video editors", "desc": "Video & AI video editing (incl. CapCut)", "color": "#fd3433", "usa": {"rev": {"2023": 316130252.0, "2024": 592132215.0, "2025": 1072442070.0, "2026": 1318851893.0}, "dl": {"2023": 1026187154.0, "2024": 985256531.0, "2025": 733449703.0, "2026": 721733275.2}, "rev_yoy": 0.2297651591, "dl_yoy": -0.01597441209, "napps": 35, "top5": [{"name": "CapCut: Photo & Video Editor", "rev25": 870166619.0, "rev26": 1118619866.0}, {"name": "Splice - Video Editor & Maker", "rev25": 43635650.0, "rev26": 35584867.2}, {"name": "AI Video - AI Video Generator", "rev25": 4177811.0, "rev26": 23522203.2}, {"name": "Captions: AI Edits Your Video", "rev25": 22892707.0, "rev26": 20389176.0}, {"name": "Video Editor & Maker - InShot", "rev25": 18668075.0, "rev26": 16761825.6}]}, "asia": {"rev": {"2023": 35758009.0, "2024": 42934109.0, "2025": 48482085.0, "2026": 52237250.4}, "dl": {"2023": 109230362.0, "2024": 133989725.0, "2025": 157601471.0, "2026": 160410129.6}, "rev_yoy": 0.07745470105, "dl_yoy": 0.01782127148, "napps": 14, "top5": [{"name": "Wink: Video Enhancer & Editor", "rev25": 23053253.0, "rev26": 28686756.0}, {"name": "VivaVideo - Video Cut & Editor", "rev25": 11171879.0, "rev26": 10521004.8}, {"name": "KwaiCut - Video Editor", "rev25": 5810390.0, "rev26": 4269741.6}, {"name": "VLLO- Video Editor, Vlog Edits", "rev25": 3952521.0, "rev26": 4030382.4}, {"name": "VN - Video Editor", "rev25": 1622153.0, "rev26": 1727126.4}]}, "tot": {"rev": {"2023": 351888261.0, "2024": 635066324.0, "2025": 1120924155.0, "2026": 1371089143.4}, "dl": {"2023": 1135417516.0, "2024": 1119246256.0, "2025": 891051174.0, "2026": 882143404.8000001}}}, {"name": "AI video generator", "desc": "Text & photo-to-video AI generation", "color": "#ff7a6b", "usa": {"rev": {"2023": 1165646.0, "2024": 5645328.0, "2025": 9984599.0, "2026": 42026541.6}, "dl": {"2023": 4097945.0, "2024": 11341200.0, "2025": 20014220.0, "2026": 47697072.0}, "rev_yoy": 3.209136651, "dl_yoy": 1.383159174, "napps": 8, "top5": [{"name": "AI Video - AI Video Generator", "rev25": 4177811.0, "rev26": 28032722.4}, {"name": "AI Music Video Generator・Shoom", "rev25": 1813409.0, "rev26": 7066996.8}, {"name": "VideoGPT - AI Video Generator", "rev25": 1709874.0, "rev26": 2494812.0}, {"name": "AI Video Generator + Creator", "rev25": 300880.0, "rev26": 1939550.4}, {"name": "AI Music Video Generator: Yuna", "rev25": 0, "rev26": 1005895.2}]}, "asia": {"rev": {"2023": 9403106.0, "2024": 6313114.0, "2025": 5569677.0, "2026": 3039448.8}, "dl": {"2023": 6717231.0, "2024": 2863291.0, "2025": 2106280.0, "2026": 1457124.0}, "rev_yoy": -0.4542863437, "dl_yoy": -0.3082002393, "napps": 4, "top5": [{"name": "Faceplay: AI Video Photo Maker", "rev25": 2879680.0, "rev26": 1872808.8}, {"name": "闪剪AI数字人 - 无限定制·智能剪辑·直播切片", "rev25": 1653778.0, "rev26": 843273.6}, {"name": "AI Hug Video Maker: JoyTu", "rev25": 880288.0, "rev26": 194349.6}, {"name": "ArtPlay: Video Editor", "rev25": 155931.0, "rev26": 129016.8}]}, "tot": {"rev": {"2023": 10568752.0, "2024": 11958442.0, "2025": 15554276.0, "2026": 45065990.4}, "dl": {"2023": 10815176.0, "2024": 14204491.0, "2025": 22120500.0, "2026": 49154196.0}}}, {"name": "Special-purpose editors", "desc": "Use-case tools: action-cam (GoPro), gaming clips, real-estate, golf, travel routes & film-negative scanning", "color": "#fccaca", "usa": {"rev": {"2023": 38305422.0, "2024": 37874302.0, "2025": 38337504.0, "2026": 36875088.0}, "dl": {"2023": 9137505.0, "2024": 10035556.0, "2025": 10412547.0, "2026": 10340779.2}, "rev_yoy": -0.03814583234, "dl_yoy": -0.006892434675, "napps": 7, "top5": [{"name": "GoPro Quik", "rev25": 36633822.0, "rev26": 35002240.8}, {"name": "Momenzo: Real Estate Videos", "rev25": 569405.0, "rev26": 544413.6}, {"name": "GolfCam: Golf Video Editor", "rev25": 163041.0, "rev26": 350258.4}, {"name": "Eklipse: AI Gaming Clip Maker", "rev25": 368676.0, "rev26": 330300.0}, {"name": "TravelAnimator・Journey Route", "rev25": 222434.0, "rev26": 284656.8}]}, "asia": null, "tot": {"rev": {"2023": 38305422.0, "2024": 37874302.0, "2025": 38337504.0, "2026": 36875088.0}, "dl": {"2023": 9137505.0, "2024": 10035556.0, "2025": 10412547.0, "2026": 10340779.2}}}, {"name": "Reel maker", "desc": "Reels & short-form video makers", "color": "#C7CCD6", "usa": {"rev": {"2023": 30103607.0, "2024": 30325637.0, "2025": 25782654.0, "2026": 27911894.4}, "dl": {"2023": 19784446.0, "2024": 21520703.0, "2025": 18980638.0, "2026": 18401872.8}, "rev_yoy": 0.08258422116, "dl_yoy": -0.03049239968, "napps": 11, "top5": [{"name": "Vids AI - Reels Video Editor", "rev25": 4435117.0, "rev26": 7373738.4}, {"name": "Muse: Reels Video Editor", "rev25": 2910031.0, "rev26": 5263221.6}, {"name": "Reels Maker for Instagram BEAT", "rev25": 3168651.0, "rev26": 4856800.8}, {"name": "Unfold: Reels & Story Maker", "rev25": 4559628.0, "rev26": 3544600.8}, {"name": "Mojo: AI Video & Reels Editor", "rev25": 5661947.0, "rev26": 3275599.2}]}, "asia": null, "tot": {"rev": {"2023": 30103607.0, "2024": 30325637.0, "2025": 25782654.0, "2026": 27911894.4}, "dl": {"2023": 19784446.0, "2024": 21520703.0, "2025": 18980638.0, "2026": 18401872.8}}}, {"name": "AI video recording", "desc": "Teleprompter & AI recording", "color": "#A2A6B1", "usa": {"rev": {"2023": 3212713.0, "2024": 7091520.0, "2025": 8988444.0, "2026": 10400160.0}, "dl": {"2023": 5945380.0, "2024": 9425836.0, "2025": 8058372.0, "2026": 7734976.8}, "rev_yoy": 0.1570589971, "dl_yoy": -0.04013157993, "napps": 6, "top5": [{"name": "BIGVU Teleprompter Captions AI", "rev25": 4915332.0, "rev26": 5395176.0}, {"name": "Teleprompter - VILO", "rev25": 1617888.0, "rev26": 2529811.2}, {"name": "VEED Shorts: AI videos", "rev25": 1295200.0, "rev26": 1182314.4}, {"name": "Riverside Podcast Video Studio", "rev25": 268289.0, "rev26": 459945.6}, {"name": "Vozo AI Video Translator & Dub", "rev25": 769110.0, "rev26": 436442.4}]}, "asia": {"rev": {"2023": 107220.0, "2024": 1722632.0, "2025": 6176979.0, "2026": 10669480.8}, "dl": {"2023": 959517.0, "2024": 2533448.0, "2025": 3352002.0, "2026": 3854865.6}, "rev_yoy": 0.7272975673, "dl_yoy": 0.1500188842, "napps": 2, "top5": [{"name": "Kaipai - Talking Video with AI", "rev25": 6176979.0, "rev26": 10466916.0}, {"name": "DulaTrackPro AI X", "rev25": 0, "rev26": 202564.8}]}, "tot": {"rev": {"2023": 3319933.0, "2024": 8814152.0, "2025": 15165423.0, "2026": 21069640.8}, "dl": {"2023": 6904897.0, "2024": 11959284.0, "2025": 11410374.0, "2026": 11589842.4}}}, {"name": "Slideshow generator", "desc": "Slideshow & photo-to-video", "color": "#767C8C", "usa": {"rev": {"2023": 12054441.0, "2024": 9642577.0, "2025": 7059972.0, "2026": 5469542.4}, "dl": {"2023": 6676131.0, "2024": 5614979.0, "2025": 5149020.0, "2026": 6007435.2}, "rev_yoy": -0.2252742079, "dl_yoy": 0.1667142874, "napps": 4, "top5": [{"name": "SlideShow Maker Photo to Video", "rev25": 5766372.0, "rev26": 4045370.4}, {"name": "Stop Motion Studio", "rev25": 736558.0, "rev26": 745063.2}, {"name": "Slideshow Maker with Music +", "rev25": 210373.0, "rev26": 379178.4}, {"name": "MoShow Slideshow Maker Video", "rev25": 346669.0, "rev26": 299930.4}]}, "asia": null, "tot": {"rev": {"2023": 12054441.0, "2024": 9642577.0, "2025": 7059972.0, "2026": 5469542.4}, "dl": {"2023": 6676131.0, "2024": 5614979.0, "2025": 5149020.0, "2026": 6007435.2}}}, {"name": "AI captions", "desc": "Auto captions & subtitles", "color": "#5E6378", "usa": {"rev": {"2023": 93674.0, "2024": 289601.0, "2025": 401695.0, "2026": 658456.8}, "dl": {"2023": 48857.0, "2024": 299222.0, "2025": 356643.0, "2026": 515870.4}, "rev_yoy": 0.6391959073, "dl_yoy": 0.4464615876, "napps": 2, "top5": [{"name": "Verba: Auto Captions for Video", "rev25": 181584.0, "rev26": 479356.8}, {"name": "AI Captions for Videos: VidCap", "rev25": 220111.0, "rev26": 179100.0}]}, "asia": {"rev": {"2023": 424850.0, "2024": 768199.0, "2025": 582506.0, "2026": 460788.0}, "dl": {"2023": 929407.0, "2024": 5300052.0, "2025": 3522285.0, "2026": 2087920.8}, "rev_yoy": -0.2089557876, "dl_yoy": -0.4072254801, "napps": 2, "top5": [{"name": "Zeemo: AI Video&Auto Captions", "rev25": 346716.0, "rev26": 238262.4}, {"name": "Liro: AI Video Caption Editor", "rev25": 235790.0, "rev26": 222525.6}]}, "tot": {"rev": {"2023": 518524.0, "2024": 1057800.0, "2025": 984201.0, "2026": 1119244.8}, "dl": {"2023": 978264.0, "2024": 5599274.0, "2025": 3878928.0, "2026": 2603791.2}}}], "overall": {"rev": {"2023": 446758940.0, "2024": 734739234.0, "2025": 1223808185.0, "2026": 1508600544.0}, "dl": {"2023": 1189713935.0, "2024": 1188180543.0, "2025": 963003181.0, "2026": 980241321.6}}, "market": {"ww": {"rev": {"2023": 401065755.0, "2024": 683001180.0, "2025": 1162996938.0, "2026": 1442193576.0}, "dl": {"2023": 1071877418.0, "2024": 1043494027.0, "2025": 796421143.0, "2026": 812431281.6}}, "asia": {"rev": {"2023": 45693185.0, "2024": 51738054.0, "2025": 60811247.0, "2026": 66406968.0}, "dl": {"2023": 117836517.0, "2024": 144686516.0, "2025": 166582038.0, "2026": 167810040.0}}}, "napps": 95, "nniche": 7},"wo":{"niches": [{"name": "(AI) Video editors", "desc": "Video & AI video editing (excl. CapCut)", "color": "#fd3433", "usa": {"rev": {"2023": 212698665.0, "2024": 209431549.0, "2025": 202275451.0, "2026": 200232026.4}, "dl": {"2023": 333676528.0, "2024": 353912451.0, "2025": 366459624.0, "2026": 350346950.4}, "rev_yoy": -0.01010218783, "dl_yoy": -0.0439684826, "napps": 34, "top5": [{"name": "Splice - Video Editor & Maker", "rev25": 43635650.0, "rev26": 35584867.2}, {"name": "AI Video - AI Video Generator", "rev25": 4177811.0, "rev26": 23522203.2}, {"name": "Captions: AI Edits Your Video", "rev25": 22892707.0, "rev26": 20389176.0}, {"name": "Video Editor & Maker - InShot", "rev25": 18668075.0, "rev26": 16761825.6}, {"name": "Filmora: AI Video Editor&Maker", "rev25": 14589859.0, "rev26": 15647318.4}]}, "asia": {"rev": {"2023": 35758009.0, "2024": 42934109.0, "2025": 48482085.0, "2026": 52237250.4}, "dl": {"2023": 109230362.0, "2024": 133989725.0, "2025": 157601471.0, "2026": 160410129.6}, "rev_yoy": 0.07745470105, "dl_yoy": 0.01782127148, "napps": 14, "top5": [{"name": "Wink: Video Enhancer & Editor", "rev25": 23053253.0, "rev26": 28686756.0}, {"name": "VivaVideo - Video Cut & Editor", "rev25": 11171879.0, "rev26": 10521004.8}, {"name": "KwaiCut - Video Editor", "rev25": 5810390.0, "rev26": 4269741.6}, {"name": "VLLO- Video Editor, Vlog Edits", "rev25": 3952521.0, "rev26": 4030382.4}, {"name": "VN - Video Editor", "rev25": 1622153.0, "rev26": 1727126.4}]}, "tot": {"rev": {"2023": 248456674.0, "2024": 252365658.0, "2025": 250757536.0, "2026": 252469276.8}, "dl": {"2023": 442906890.0, "2024": 487902176.0, "2025": 524061095.0, "2026": 510757080.0}}}, {"name": "AI video generator", "desc": "Text & photo-to-video AI generation", "color": "#ff7a6b", "usa": {"rev": {"2023": 1165646.0, "2024": 5645328.0, "2025": 9984599.0, "2026": 42026541.6}, "dl": {"2023": 4097945.0, "2024": 11341200.0, "2025": 20014220.0, "2026": 47697072.0}, "rev_yoy": 3.209136651, "dl_yoy": 1.383159174, "napps": 8, "top5": [{"name": "AI Video - AI Video Generator", "rev25": 4177811.0, "rev26": 28032722.4}, {"name": "AI Music Video Generator・Shoom", "rev25": 1813409.0, "rev26": 7066996.8}, {"name": "VideoGPT - AI Video Generator", "rev25": 1709874.0, "rev26": 2494812.0}, {"name": "AI Video Generator + Creator", "rev25": 300880.0, "rev26": 1939550.4}, {"name": "AI Music Video Generator: Yuna", "rev25": 0, "rev26": 1005895.2}]}, "asia": {"rev": {"2023": 9403106.0, "2024": 6313114.0, "2025": 5569677.0, "2026": 3039448.8}, "dl": {"2023": 6717231.0, "2024": 2863291.0, "2025": 2106280.0, "2026": 1457124.0}, "rev_yoy": -0.4542863437, "dl_yoy": -0.3082002393, "napps": 4, "top5": [{"name": "Faceplay: AI Video Photo Maker", "rev25": 2879680.0, "rev26": 1872808.8}, {"name": "闪剪AI数字人 - 无限定制·智能剪辑·直播切片", "rev25": 1653778.0, "rev26": 843273.6}, {"name": "AI Hug Video Maker: JoyTu", "rev25": 880288.0, "rev26": 194349.6}, {"name": "ArtPlay: Video Editor", "rev25": 155931.0, "rev26": 129016.8}]}, "tot": {"rev": {"2023": 10568752.0, "2024": 11958442.0, "2025": 15554276.0, "2026": 45065990.4}, "dl": {"2023": 10815176.0, "2024": 14204491.0, "2025": 22120500.0, "2026": 49154196.0}}}, {"name": "Special-purpose editors", "desc": "Use-case tools: action-cam (GoPro), gaming clips, real-estate, golf, travel routes & film-negative scanning", "color": "#fccaca", "usa": {"rev": {"2023": 38305422.0, "2024": 37874302.0, "2025": 38337504.0, "2026": 36875088.0}, "dl": {"2023": 9137505.0, "2024": 10035556.0, "2025": 10412547.0, "2026": 10340779.2}, "rev_yoy": -0.03814583234, "dl_yoy": -0.006892434675, "napps": 7, "top5": [{"name": "GoPro Quik", "rev25": 36633822.0, "rev26": 35002240.8}, {"name": "Momenzo: Real Estate Videos", "rev25": 569405.0, "rev26": 544413.6}, {"name": "GolfCam: Golf Video Editor", "rev25": 163041.0, "rev26": 350258.4}, {"name": "Eklipse: AI Gaming Clip Maker", "rev25": 368676.0, "rev26": 330300.0}, {"name": "TravelAnimator・Journey Route", "rev25": 222434.0, "rev26": 284656.8}]}, "asia": null, "tot": {"rev": {"2023": 38305422.0, "2024": 37874302.0, "2025": 38337504.0, "2026": 36875088.0}, "dl": {"2023": 9137505.0, "2024": 10035556.0, "2025": 10412547.0, "2026": 10340779.2}}}, {"name": "Reel maker", "desc": "Reels & short-form video makers", "color": "#C7CCD6", "usa": {"rev": {"2023": 30103607.0, "2024": 30325637.0, "2025": 25782654.0, "2026": 27911894.4}, "dl": {"2023": 19784446.0, "2024": 21520703.0, "2025": 18980638.0, "2026": 18401872.8}, "rev_yoy": 0.08258422116, "dl_yoy": -0.03049239968, "napps": 11, "top5": [{"name": "Vids AI - Reels Video Editor", "rev25": 4435117.0, "rev26": 7373738.4}, {"name": "Muse: Reels Video Editor", "rev25": 2910031.0, "rev26": 5263221.6}, {"name": "Reels Maker for Instagram BEAT", "rev25": 3168651.0, "rev26": 4856800.8}, {"name": "Unfold: Reels & Story Maker", "rev25": 4559628.0, "rev26": 3544600.8}, {"name": "Mojo: AI Video & Reels Editor", "rev25": 5661947.0, "rev26": 3275599.2}]}, "asia": null, "tot": {"rev": {"2023": 30103607.0, "2024": 30325637.0, "2025": 25782654.0, "2026": 27911894.4}, "dl": {"2023": 19784446.0, "2024": 21520703.0, "2025": 18980638.0, "2026": 18401872.8}}}, {"name": "AI video recording", "desc": "Teleprompter & AI recording", "color": "#A2A6B1", "usa": {"rev": {"2023": 3212713.0, "2024": 7091520.0, "2025": 8988444.0, "2026": 10400160.0}, "dl": {"2023": 5945380.0, "2024": 9425836.0, "2025": 8058372.0, "2026": 7734976.8}, "rev_yoy": 0.1570589971, "dl_yoy": -0.04013157993, "napps": 6, "top5": [{"name": "BIGVU Teleprompter Captions AI", "rev25": 4915332.0, "rev26": 5395176.0}, {"name": "Teleprompter - VILO", "rev25": 1617888.0, "rev26": 2529811.2}, {"name": "VEED Shorts: AI videos", "rev25": 1295200.0, "rev26": 1182314.4}, {"name": "Riverside Podcast Video Studio", "rev25": 268289.0, "rev26": 459945.6}, {"name": "Vozo AI Video Translator & Dub", "rev25": 769110.0, "rev26": 436442.4}]}, "asia": {"rev": {"2023": 107220.0, "2024": 1722632.0, "2025": 6176979.0, "2026": 10669480.8}, "dl": {"2023": 959517.0, "2024": 2533448.0, "2025": 3352002.0, "2026": 3854865.6}, "rev_yoy": 0.7272975673, "dl_yoy": 0.1500188842, "napps": 2, "top5": [{"name": "Kaipai - Talking Video with AI", "rev25": 6176979.0, "rev26": 10466916.0}, {"name": "DulaTrackPro AI X", "rev25": 0, "rev26": 202564.8}]}, "tot": {"rev": {"2023": 3319933.0, "2024": 8814152.0, "2025": 15165423.0, "2026": 21069640.8}, "dl": {"2023": 6904897.0, "2024": 11959284.0, "2025": 11410374.0, "2026": 11589842.4}}}, {"name": "Slideshow generator", "desc": "Slideshow & photo-to-video", "color": "#767C8C", "usa": {"rev": {"2023": 12054441.0, "2024": 9642577.0, "2025": 7059972.0, "2026": 5469542.4}, "dl": {"2023": 6676131.0, "2024": 5614979.0, "2025": 5149020.0, "2026": 6007435.2}, "rev_yoy": -0.2252742079, "dl_yoy": 0.1667142874, "napps": 4, "top5": [{"name": "SlideShow Maker Photo to Video", "rev25": 5766372.0, "rev26": 4045370.4}, {"name": "Stop Motion Studio", "rev25": 736558.0, "rev26": 745063.2}, {"name": "Slideshow Maker with Music +", "rev25": 210373.0, "rev26": 379178.4}, {"name": "MoShow Slideshow Maker Video", "rev25": 346669.0, "rev26": 299930.4}]}, "asia": null, "tot": {"rev": {"2023": 12054441.0, "2024": 9642577.0, "2025": 7059972.0, "2026": 5469542.4}, "dl": {"2023": 6676131.0, "2024": 5614979.0, "2025": 5149020.0, "2026": 6007435.2}}}, {"name": "AI captions", "desc": "Auto captions & subtitles", "color": "#5E6378", "usa": {"rev": {"2023": 93674.0, "2024": 289601.0, "2025": 401695.0, "2026": 658456.8}, "dl": {"2023": 48857.0, "2024": 299222.0, "2025": 356643.0, "2026": 515870.4}, "rev_yoy": 0.6391959073, "dl_yoy": 0.4464615876, "napps": 2, "top5": [{"name": "Verba: Auto Captions for Video", "rev25": 181584.0, "rev26": 479356.8}, {"name": "AI Captions for Videos: VidCap", "rev25": 220111.0, "rev26": 179100.0}]}, "asia": {"rev": {"2023": 424850.0, "2024": 768199.0, "2025": 582506.0, "2026": 460788.0}, "dl": {"2023": 929407.0, "2024": 5300052.0, "2025": 3522285.0, "2026": 2087920.8}, "rev_yoy": -0.2089557876, "dl_yoy": -0.4072254801, "napps": 2, "top5": [{"name": "Zeemo: AI Video&Auto Captions", "rev25": 346716.0, "rev26": 238262.4}, {"name": "Liro: AI Video Caption Editor", "rev25": 235790.0, "rev26": 222525.6}]}, "tot": {"rev": {"2023": 518524.0, "2024": 1057800.0, "2025": 984201.0, "2026": 1119244.8}, "dl": {"2023": 978264.0, "2024": 5599274.0, "2025": 3878928.0, "2026": 2603791.2}}}], "overall": {"rev": {"2023": 343327353.0, "2024": 352038568.0, "2025": 353641566.0, "2026": 389980677.6}, "dl": {"2023": 497203309.0, "2024": 556836463.0, "2025": 596013102.0, "2026": 608854996.8}}, "market": {"ww": {"rev": {"2023": 297634168.0, "2024": 300300514.0, "2025": 292830319.0, "2026": 323573709.6}, "dl": {"2023": 379366792.0, "2024": 412149947.0, "2025": 429431064.0, "2026": 441044956.8}}, "asia": {"rev": {"2023": 45693185.0, "2024": 51738054.0, "2025": 60811247.0, "2026": 66406968.0}, "dl": {"2023": 117836517.0, "2024": 144686516.0, "2025": 166582038.0, "2026": 167810040.0}}}, "napps": 94, "nniche": 7}}; let DATA=DATASETS.with;
+const Y=['2023','2024','2025','2026'], PROJ='2026';
+const fmtRev=v=>v==null?"—":v>=1e9?"$"+(v/1e9).toFixed(2)+"B":v>=1e6?"$"+(v/1e6).toFixed(1)+"M":v>=1e3?"$"+(v/1e3).toFixed(0)+"K":"$"+Math.round(v);
+const fmtDl=v=>v==null?"—":v>=1e9?(v/1e9).toFixed(2)+"B":v>=1e6?(v/1e6).toFixed(1)+"M":v>=1e3?(v/1e3).toFixed(0)+"K":Math.round(v);
+const pct=f=>f==null?"—":(f>=0?"+":"")+(f*100).toFixed(0)+"%";
+const cls=f=>f==null?"flat":f>0.005?"up":f<-0.005?"down":"flat";
+const yoy=(a,b)=>(a&&b)?(b-a)/a:null;
+
+/* hero */
+function buildHero(){
+  const o=DATA.overall;
+  const rP=yoy(o.rev['2025'],o.rev['2026']), dP=yoy(o.dl['2025'],o.dl['2026']);
+  document.getElementById('bignums').innerHTML=`
+    <div class="bignum">
+      <div class="lab">Total revenue</div>
+      <div class="v">${fmtRev(o.rev['2026'])}</div>
+      <div class="yr"><span class="yref">2026 proj</span><span class="delta ${cls(rP)}">${pct(rP)} YoY</span></div>
+      <div class="proj2">2025 actual <b>${fmtRev(o.rev['2025'])}</b></div>
+    </div>
+    <div class="bignum">
+      <div class="lab">Total downloads</div>
+      <div class="v">${fmtDl(o.dl['2026'])}</div>
+      <div class="yr"><span class="yref">2026 proj</span><span class="delta ${cls(dP)}">${pct(dP)} YoY</span></div>
+      <div class="proj2">2025 actual <b>${fmtDl(o.dl['2025'])}</b></div>
+    </div>`;
+}
+
+/* cards + click-to-decompose */
+function buildCards(){
+  function tint(hex){const c=hex.replace('#','');const r=parseInt(c.slice(0,2),16),g=parseInt(c.slice(2,4),16),b=parseInt(c.slice(4,6),16);return `rgba(${r},${g},${b},0.16)`;}
+  function rbox(label,col,reg,share){
+    if(!reg) return "";
+    const top=reg.top5.map((a,i)=>{const y=yoy(a.rev25,a.rev26);return `<div class="app"><span class="rk">${i+1}</span><span class="an" title="${a.name}">${a.name}</span><span class="av">${fmtRev(a.rev26)}</span><span class="ay ${cls(y)}">${pct(y)}</span></div>`;}).join("");
+    const r=reg.rev,d=reg.dl;
+    const cell=(o,y,prev,f,extra)=>{const yo=prev?yoy(o[prev],o[y]):null;const yy=yo!=null?`<span class="cy ${cls(yo)}">${pct(yo)}</span>`:'';return `<td class="v ${extra||''}"><span class="cv">${f(o[y])}</span>${yy}</td>`;};
+    return `<div class="rbox"><div class="rbox-h"><span class="pin" style="background:${col}"></span><span class="rb-name">${label} · ${reg.napps} apps</span>${share?`<span class="rb-share">${share}</span>`:''}</div>
+      <table class="mtab"><thead><tr><th class="m"></th><th>2023</th><th>2024</th><th>2025</th><th class="proj">2026*</th></tr></thead><tbody>
+      <tr><td class="m">Revenue</td>${cell(r,'2023',null,fmtRev)}${cell(r,'2024','2023',fmtRev)}${cell(r,'2025','2024',fmtRev,'latest')}${cell(r,'2026','2025',fmtRev,'proj')}</tr>
+      <tr><td class="m">Downloads</td>${cell(d,'2023',null,fmtDl)}${cell(d,'2024','2023',fmtDl)}${cell(d,'2025','2024',fmtDl,'latest')}${cell(d,'2026','2025',fmtDl,'proj')}</tr>
+      </tbody></table><div class="proj-note">* 2026 = projection · YoY shown per year (vs previous year)</div>
+      <div class="t5lab">Top 5 apps · by 2026 revenue*</div>${top}</div>`;
+  }
+  function buildDetail(n){
+    const solo=!(n.usa&&n.asia);
+    let sw=null, sa=null;
+    if(!solo){
+      const tr=n.tot.rev['2026']||1, td=n.tot.dl['2026']||1;
+      const pr=v=>Math.round((v||0)/tr*100), pd=v=>Math.round((v||0)/td*100);
+      sw=`${pr(n.usa.rev['2026'])}% rev · ${pd(n.usa.dl['2026'])}% dl`;
+      sa=`${pr(n.asia.rev['2026'])}% rev · ${pd(n.asia.dl['2026'])}% dl`;
+    }
+    return `<div class="niche" style="--c:${n.color}">
+      <div class="niche-head"><span class="pin" style="background:${n.color}"></span><h3>${n.name}</h3><span class="desc">${n.desc}</span>
+        <div class="tot"><div class="v">${fmtRev(n.tot.rev['2026'])}</div><div class="l">revenue 2026*</div></div></div>
+      <div class="region-grid ${solo?'solo':''}">${rbox('WW (excl. Asia)','var(--usa)',n.usa,sw)}${rbox('Asia','var(--asia)',n.asia,sa)}</div></div>`;
+  }
+  document.getElementById('cards').innerHTML=DATA.niches.map((n,idx)=>{
+    const rev26=n.tot.rev['2026']||0, dl26=n.tot.dl['2026']||0;
+    const rShare=Math.round(rev26/(DATA.overall.rev['2026']||1)*100), dShare=Math.round(dl26/(DATA.overall.dl['2026']||1)*100);
+    return `<button class="ncard" type="button" data-i="${idx}" aria-expanded="false" aria-controls="detail" style="--c:${n.color};--tint:${tint(n.color)}">
+      <span class="chev" aria-hidden="true">&#9662;</span>
+      <span class="cname">${n.name}</span>
+      <span class="cmetric"><span class="cm-lab">Revenue 2026*</span><span class="cm-val">${fmtRev(rev26)}</span><span class="cm-share"><b>${rShare}%</b> of total</span></span>
+      <span class="cmetric"><span class="cm-lab">Downloads 2026*</span><span class="cm-val">${fmtDl(dl26)}</span><span class="cm-share"><b>${dShare}%</b> of total</span></span></button>`;
+  }).join("");
+  const wrap=document.getElementById('detailwrap'), detail=document.getElementById('detail');
+  const cards=[...document.querySelectorAll('.ncard')]; let sel=null;
+  function select(i,scroll){
+    if(sel===i) return;                       // already open -> keep it, never collapse
+    sel=i; detail.innerHTML=buildDetail(DATA.niches[i]); wrap.classList.add('open');
+    cards.forEach((c,j)=>c.setAttribute('aria-expanded', j===i?'true':'false'));
+    if(scroll) requestAnimationFrame(()=>wrap.scrollIntoView({behavior:'smooth',block:'nearest'}));
+  }
+  cards.forEach(c=>c.addEventListener('click',()=>select(+c.dataset.i,true)));
+  const _def=DATA.niches.findIndex(n=>n.name==='(AI) Video editors');   // open by default
+  select(_def>=0?_def:0,false);
+}
+
+/* ---------- dropdown helper ---------- */
+let openDD=null;
+function closeDD(){ if(openDD){openDD.classList.remove('open'); openDD.querySelector('.dd-btn').setAttribute('aria-expanded','false'); openDD=null;} }
+document.addEventListener('click',closeDD);
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeDD(); });
+function checkmark(){ return '<span class="ck"><svg viewBox="0 0 16 16" width="11" height="11"><path d="M3 8l3.2 3.5L13 4.5" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'; }
+function buildDropdown(host,cfg){
+  host.className='dd';
+  const btn=document.createElement('button'); btn.type='button'; btn.className='dd-btn'; btn.setAttribute('aria-haspopup','listbox'); btn.setAttribute('aria-expanded','false');
+  const pop=document.createElement('div'); pop.className='dd-pop'; pop.setAttribute('role','listbox'); host.append(btn,pop);
+  function valLabel(){
+    if(cfg.multi){ const on=cfg.options.filter(o=>cfg.isOn(o.v)).length; return on===cfg.options.length?'All ('+on+')':on+' of '+cfg.options.length; }
+    const o=cfg.options.find(o=>o.v===cfg.current()); return o?o.label:'';
+  }
+  function renderBtn(){ btn.innerHTML=`<span class="dd-lab">${cfg.label}</span><span class="dd-val">${valLabel()}</span><span class="dd-caret">&#9662;</span>`; }
+  function renderPop(){
+    pop.innerHTML=cfg.options.map(o=>{
+      const on=cfg.multi?cfg.isOn(o.v):cfg.current()===o.v;
+      const sw=o.color?`<span class="sw" style="background:${o.color}"></span>`:'';
+      return `<div class="dd-opt" role="option" data-v="${o.v}" aria-selected="${on}">${checkmark()}${sw}<span class="ddt">${o.label}</span></div>`;
+    }).join("")+(cfg.multi?`<div class="dd-sep"></div><div class="dd-all">Toggle all</div>`:'');
+    pop.querySelectorAll('.dd-opt').forEach(op=>op.addEventListener('click',e=>{e.stopPropagation();cfg.onPick(op.dataset.v);renderBtn();renderPop();if(!cfg.multi)closeDD();}));
+    const all=pop.querySelector('.dd-all'); if(all) all.addEventListener('click',e=>{e.stopPropagation();cfg.onAll();renderBtn();renderPop();});
+  }
+  btn.addEventListener('click',e=>{e.stopPropagation();const isOpen=host.classList.contains('open');closeDD();if(!isOpen){host.classList.add('open');btn.setAttribute('aria-expanded','true');openDD=host;renderPop();}});
+  pop.addEventListener('click',e=>e.stopPropagation());
+  renderBtn();
+}
+
+/* ---------- stacked area chart ---------- */
+function buildChart(){
+  ['dd-metric','dd-market','dd-niche'].forEach(id=>{const e=document.getElementById(id); if(e) e.innerHTML='';});
+  const W=860,H=380, m={t:34,r:20,b:46,l:64};
+  const plotW=W-m.l-m.r, plotH=H-m.t-m.b;
+  let metric='rev', region='all'; const hidden=new Set(); const niches=DATA.niches;
+  const xs=Y.map((y,i)=> m.l + plotW*i/(Y.length-1));
+  const projX=xs[Y.indexOf(PROJ)-1]; // boundary at 2025
+  const svg=document.getElementById('chartsvg'); const tip=document.getElementById('ctip'), wrap=document.getElementById('cwrap');
+
+  function val(n,y){ if(region==='all') return n.tot[metric][y]||0; const s=region==='usa'?n.usa:n.asia; return s?(s[metric][y]||0):0; }
+  const fmt=v=> metric==='rev'?fmtRev(v):fmtDl(v);
+  function curveCmds(pts){let d='';for(let i=0;i<pts.length-1;i++){const p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||pts[i+1];const c1x=p1.x+(p2.x-p0.x)/6,c1y=p1.y+(p2.y-p0.y)/6,c2x=p2.x-(p3.x-p1.x)/6,c2y=p2.y-(p3.y-p1.y)/6;d+=` C ${c1x.toFixed(1)} ${c1y.toFixed(1)} ${c2x.toFixed(1)} ${c2y.toFixed(1)} ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;}return d;}
+  let curSy=v=>v, cumByYear=[];
+
+  function render(){
+    const active=niches.filter(n=>!hidden.has(n.name) && Y.some(y=>val(n,y)>0));
+    const totals=Y.map(y=>active.reduce((s,n)=>s+val(n,y),0));
+    const mx=Math.max(...totals,1), pow=Math.pow(10,Math.floor(Math.log10(mx))), ceil=Math.ceil(mx/pow*1.05)*pow;
+    const sy=v=> m.t+plotH - v/ceil*plotH; curSy=sy;
+    let g=`<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="rgba(255,255,255,0.025)"/><line x1="0" y1="0" x2="0" y2="7" stroke="rgba(255,255,255,0.07)" stroke-width="1.1"/></pattern></defs>`;
+    for(let i=0;i<=4;i++){ const v=ceil/4*i, yy=sy(v); g+=`<line class="grid-l" x1="${m.l}" y1="${yy}" x2="${W-m.r}" y2="${yy}"/><text class="axis-t" x="${m.l-10}" y="${yy+4}" text-anchor="end">${fmt(v)}</text>`; }
+    const order=[...active].sort((a,b)=>val(b,'2025')-val(a,'2025'));
+    let below=Y.map(()=>0); cumByYear=Y.map((y,xi)=>({year:y,x:xs[xi],rows:[],total:totals[xi]}));
+    order.forEach(n=>{
+      const top=Y.map((y,xi)=>({x:xs[xi],y:sy(below[xi]+val(n,y))})), bot=Y.map((y,xi)=>({x:xs[xi],y:sy(below[xi])}));
+      const d=`M ${top[0].x} ${top[0].y}`+curveCmds(top)+` L ${bot[bot.length-1].x} ${bot[bot.length-1].y}`+curveCmds([...bot].reverse())+` Z`;
+      g+=`<path class="layer" d="${d}" fill="${n.color}" fill-opacity="0.9" stroke="${n.color}"/>`;
+      Y.forEach((y,xi)=>{ below[xi]+=val(n,y); cumByYear[xi].rows.push({name:n.name,color:n.color,val:val(n,y),cum:below[xi]}); });
+    });
+    // projection zone overlay
+    g+=`<rect x="${projX}" y="${m.t}" width="${W-m.r-projX}" height="${plotH}" fill="url(#hatch)" pointer-events="none"/>`;
+    g+=`<line class="proj-div" x1="${projX}" y1="${m.t}" x2="${projX}" y2="${m.t+plotH}"/>`;
+    g+=`<text class="proj-lab" x="${(projX+xs[xs.length-1])/2}" y="${m.t-12}" text-anchor="middle">projection</text>`;
+    Y.forEach((y,xi)=>{ g+=`<text class="tot-t" x="${xs[xi]}" y="${sy(totals[xi])-10}" text-anchor="middle">${fmt(totals[xi])}</text><text class="yr-t ${y===PROJ?'proj':''}" x="${xs[xi]}" y="${H-16}" text-anchor="middle">${y}${y===PROJ?'*':''}</text>`; });
+    g+=`<g id="guide" style="opacity:0"><line class="guide" x1="0" y1="${m.t}" x2="0" y2="${m.t+plotH}"/></g>`;
+    svg.innerHTML=g;
+    // static legend (color key + projection key)
+    document.getElementById('clegend').innerHTML=niches.map(n=>`<span class="lk ${hidden.has(n.name)?'off':''}"><span class="d" style="background:${n.color}"></span>${n.name}</span>`).join("")
+      +`<span class="proj-key"><span class="pb"></span>2026 projection</span>`;
+  }
+  function showYear(xi,clientY){
+    const cy=cumByYear[xi]; if(!cy) return; const guide=document.getElementById('guide'); if(!guide) return;
+    guide.style.opacity=1; const ln=guide.querySelector('line'); ln.setAttribute('x1',cy.x); ln.setAttribute('x2',cy.x);
+    [...guide.querySelectorAll('circle')].forEach(c=>c.remove());
+    cy.rows.forEach(r=>{const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('class','gd');c.setAttribute('cx',cy.x);c.setAttribute('cy',curSy(r.cum));c.setAttribute('r',3.5);c.setAttribute('fill',r.color);guide.appendChild(c);});
+    const rows=[...cy.rows].filter(r=>r.val>0).sort((a,b)=>b.val-a.val);
+    tip.innerHTML=`<div class="th"><span>${cy.year}${cy.year===PROJ?' · proj':''}</span><span class="tt">${fmt(cy.total)}</span></div>`+rows.map(r=>`<div class="tr"><span class="l"><span class="d" style="background:${r.color}"></span>${r.name}</span><span class="rv">${fmt(r.val)}</span></div>`).join("");
+    const wr=wrap.getBoundingClientRect(), sr=svg.getBoundingClientRect(), ppu=sr.width/W;
+    tip.style.left=((sr.left-wr.left)+cy.x*ppu)+'px'; tip.style.top=(clientY-wr.top)+'px'; tip.style.opacity=1;
+  }
+  svg.addEventListener('mousemove',e=>{const sr=svg.getBoundingClientRect(),px=(e.clientX-sr.left)*(W/sr.width);let xi=0,best=1e9;xs.forEach((x,i)=>{const dd=Math.abs(x-px);if(dd<best){best=dd;xi=i;}});showYear(xi,e.clientY);});
+  svg.addEventListener('mouseleave',()=>{tip.style.opacity=0;const gg=document.getElementById('guide');if(gg)gg.style.opacity=0;});
+
+  // dropdown filters
+  buildDropdown(document.getElementById('dd-metric'),{label:'Metric',options:[{v:'rev',label:'Revenue'},{v:'dl',label:'Downloads'}],current:()=>metric,onPick:v=>{metric=v;render();}});
+  buildDropdown(document.getElementById('dd-market'),{label:'Market',options:[{v:'all',label:'All markets'},{v:'usa',label:'WW (excl. Asia)'},{v:'asia',label:'Asia'}],current:()=>region,onPick:v=>{region=v;render();}});
+  buildDropdown(document.getElementById('dd-niche'),{label:'Sub-niches',multi:true,options:niches.map(n=>({v:n.name,label:n.name,color:n.color})),
+    isOn:v=>!hidden.has(v),onPick:v=>{hidden.has(v)?hidden.delete(v):hidden.add(v);render();},
+    onAll:()=>{ if(hidden.size===0) niches.forEach(n=>hidden.add(n.name)); else hidden.clear(); render(); }});
+  render();
+}
+
+function renderAll(){ buildHero(); buildCards(); buildChart(); }
+renderAll();
+(function(){
+  const seg=document.getElementById('capseg'); if(!seg) return;
+  seg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    const m=b.dataset.mode; if(DATASETS[m]===DATA) return;
+    DATA=DATASETS[m];
+    seg.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed', x.dataset.mode===m?'true':'false'));
+    renderAll();
+  }));
+})();
+requestAnimationFrame(()=>requestAnimationFrame(()=>{document.querySelectorAll('.ncard .spark i[data-h]').forEach(el=>el.style.height=el.dataset.h+'px');}));
+</script>
+</body></html>
